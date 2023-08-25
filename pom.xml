@@ -29,10 +29,7 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-web</artifactId>-->
 <!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
@@ -85,12 +82,6 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		 https://mvnrepository.com/artifact/com.vladmihalcea/hibernate-types-52-->
-<!--		<dependency>-->
-<!--			<groupId>com.vladmihalcea</groupId>-->
-<!--			<artifactId>hibernate-types-52</artifactId>-->
-<!--			<version>2.20.0</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -108,11 +99,6 @@
 			<version>6.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
-
 	</dependencies>
 
 

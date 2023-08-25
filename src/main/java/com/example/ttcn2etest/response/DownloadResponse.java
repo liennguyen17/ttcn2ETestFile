@@ -1,4 +1,4 @@
-package com.example.ttcn2etest.model.dto;
+package com.example.ttcn2etest.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role1DTO {
-    private String id;
-    private String name;
+public class DownloadResponse {
+    private String linkDownload;
 }

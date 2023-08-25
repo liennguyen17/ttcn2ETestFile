@@ -1,5 +1,7 @@
 package com.example.ttcn2etest.controller;
 
+
+import com.example.ttcn2etest.response.DownloadResponse;
 import com.example.ttcn2etest.response.UploadResponse;
 import com.example.ttcn2etest.service.file.MinioAdapter;
 import io.minio.errors.*;
@@ -25,17 +27,28 @@ public class FileController {
         this.adapter = adapter;
     }
 
-    @PostMapping(path = "/", produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Mono<UploadResponse> upload(
-            @RequestPart(value = "files", required = true) Mono<FilePart> files) {
-        return adapter.uploadFile(files);
-    }
 
     //upload file
     @PostMapping(path = "/stream", produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<UploadResponse> uploadStream(
             @RequestPart(value = "files", required = true) FilePart files, @RequestParam(value = "ttl", required = false) Integer ttl) {
         return adapter.putObject(files);
+    }
+
+    //download file
+    @GetMapping(path = "/download")
+    public ResponseEntity<DownloadResponse> getUrlFileWithExpiredTime(
+            @RequestParam(value = "filename") String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        String downloadLink = adapter.getUrlFileWithExpiredTime(fileName);
+        DownloadResponse response = new DownloadResponse();
+        response.setLinkDownload(downloadLink);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping(path = "/", produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Mono<UploadResponse> upload(
+            @RequestPart(value = "files", required = true) Mono<FilePart> files) {
+        return adapter.uploadFile(files);
     }
 
     @GetMapping(path = "/")
@@ -45,18 +58,6 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE).body(adapter.download(fileName));
     }
-
-    //download file
-    @GetMapping(path = "/download")
-    public ResponseEntity<String> getUrlFileWithExpiredTime(
-            @RequestParam(value = "filename") String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        return ResponseEntity.ok().body(adapter.getUrlFileWithExpiredTime(fileName));
-    }
-
-
-
-
-
 
 
 }
